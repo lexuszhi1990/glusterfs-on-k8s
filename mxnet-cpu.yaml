@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mxnet-cpu
+  labels:
+    name: mxnet
+spec:
+  containers:
+  - name: mxnet-cpu
+    image: mxnet:1.0.0
+    command: ['sleep', '3000']
+    volumeMounts:
+    - name: dataset-claim
+      mountPath: /mnt
+      readOnly: true
+  volumes:
+  - name: dataset-claim
+    persistentVolumeClaim:
+      claimName: gfs-dataset-claim

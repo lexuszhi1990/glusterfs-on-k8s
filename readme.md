@@ -1,5 +1,28 @@
 glusterfs on k8s
 
+### setup glusterfs
+
+http://docs.gluster.org/en/latest/Quick-Start-Guide/Quickstart/
+
+#### Set up a GlusterFS volume
+
+On both node1 and node2:
+`sudo mkdir -p /mnt/data/glusterfs/datasets`
+
+create volume from any single server:
+`sudo gluster volume create datasets replica 2 node1:/mnt/data/glusterfs/datasets node2:/mnt/data/glusterfs/datasets`
+
+start gfs volume
+
+`sudo gluster volume start datasets`
+
+Confirm that the volume shows "Started":
+`sudo gluster volume info datasets`
+
+ Testing the GlusterFS volume(on node1):
+`sudo mount -t glusterfs node1:/datasets /mnt/datasets`
+
+
 ### Creating the Gluster Endpoints and Gluster Service for Persistence
 
 Save the endpoints definition to a file, for example `gluster-endpoints.yaml`.
@@ -157,7 +180,6 @@ Verify that the persistent volume was created:
 
 for more pod infos:
 `kubectl describe pod mxnet-cpu`
-
 
 ### backup
 

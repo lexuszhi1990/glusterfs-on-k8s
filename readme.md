@@ -1,10 +1,8 @@
 # glusterfs on k8s
 
-### setup glusterfs
-
 http://docs.gluster.org/en/latest/Quick-Start-Guide/Quickstart/
 
-#### Set up a GlusterFS volume
+### Set up a GlusterFS volume
 
 On both node1 and node2:
 `sudo mkdir -p /mnt/data/glusterfs/datasets`
@@ -37,7 +35,6 @@ then create the endpoints object:
 Verify that the endpoints were created:
 
 `kubectl get endpoints`
-
 
 ```
 apiVersion: v1

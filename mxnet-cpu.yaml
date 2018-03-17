@@ -8,7 +8,7 @@ spec:
   containers:
   - name: mxnet-cpu
     image: mxnet:1.0.0
-    command: ['sleep', '3000']
+    command: ['bash']
     volumeMounts:
     - name: dataset-claim
       mountPath: /mnt

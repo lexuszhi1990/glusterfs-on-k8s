@@ -1,15 +1,7 @@
 apiVersion: v1
-kind: Endpoints
+kind: Service
 metadata:
   name: glusterfs-cluster
-subsets:
-- addresses:
-  - ip: 192.168.2.177
+spec:
   ports:
   - port: 1990
-    protocol: TCP
-- addresses:
-  - ip: 192.168.2.46
-  ports:
-  - port: 1990
-    protocol: TCP

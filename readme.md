@@ -1,25 +1,57 @@
 # glusterfs on k8s
 
+
+### Set up a GlusterFS volume on ubuntu 16.04
+
+offical reference:
 http://docs.gluster.org/en/latest/Quick-Start-Guide/Quickstart/
 
-### Set up a GlusterFS volume
-
-On both node1 and node2:
+create volume dir on both node1 and node2:
 `sudo mkdir -p /mnt/data/glusterfs/datasets`
 
-create volume from any single server:
+create volume named `datasets` from any single server:
 `sudo gluster volume create datasets replica 2 node1:/mnt/data/glusterfs/datasets node2:/mnt/data/glusterfs/datasets`
 
-start gfs volume
-
+start gfs volume `datasets`
 `sudo gluster volume start datasets`
 
 Confirm that the volume shows "Started":
-`sudo gluster volume info datasets`
+```
+$ sudo gluster volume info datasets
+
+Volume Name: datasets
+Type: Replicate
+Volume ID: 1e665b59-4962-4537-a855-8428ee57825b
+Status: Started
+Snapshot Count: 0
+Number of Bricks: 1 x 2 = 2
+Transport-type: tcp
+Bricks:
+Brick1: node1:/mnt/data/glusterfs/datasets
+Brick2: node2:/mnt/data/glusterfs/datasets
+Options Reconfigured:
+transport.address-family: inet
+nfs.disable: on
+```
+
+check the volume `datasets` state
+```
+$ sudo gluster volume state datasets
+volume statedump: success
+```
+
+check the peer volume state
+```
+$ sudo gluster peer status
+Number of Peers: 1
+
+Hostname: ubuntu
+Uuid: c0ad92a4-03a7-4ef1-9a97-c524532d0c5a
+State: Peer in Cluster (Connected)
+```
 
  Testing the GlusterFS volume(on node1):
 `sudo mount -t glusterfs node1:/datasets /mnt/datasets`
-
 
 ### Creating the Gluster Endpoints and Gluster Service for Persistence
 

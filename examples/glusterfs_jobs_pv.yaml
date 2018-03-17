@@ -6,7 +6,7 @@ spec:
   capacity:
     storage: 48Gi
   accessModes:
-  - ReadOnlyMany
+  - ReadWriteMany
   glusterfs:
     endpoints: glusterfs-cluster
     path: '/jobs'

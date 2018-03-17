@@ -10,10 +10,17 @@ create volume dir on both node1 and node2:
 `sudo mkdir -p /mnt/data/glusterfs/datasets`
 
 create volume named `datasets` from any single server:
-`sudo gluster volume create datasets replica 2 node1:/mnt/data/glusterfs/datasets node2:/mnt/data/glusterfs/datasets`
+```
+$ sudo gluster volume create datasets replica 2 node1:/mnt/data/glusterfs/datasets node2:/mnt/data/glusterfs/datasets
+
+volume create: datasets: success: please start the volume to access data
+```
 
 start gfs volume `datasets`
-`sudo gluster volume start datasets`
+```
+$ sudo gluster volume start datasets
+volume start: datasets: success
+```
 
 Confirm that the volume shows "Started":
 ```

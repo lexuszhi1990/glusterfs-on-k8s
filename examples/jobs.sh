@@ -3,4 +3,4 @@ sudo gluster volume create jobs replica 2 node1:/mnt/gf_500G/jobs node2:/mnt/gf_
 sudo gluster volume start jobs
 sudo gluster volume info jobs
 sudo gluster volume state jobs
-mkdir -p /mnt/gf_mnt/jobs && sudo mount -t glusterfs node1:/jobs /mnt/gf_mnt/jobs
+sudo mount -t glusterfs node1:/jobs /mnt/gf_mnt/jobs

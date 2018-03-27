@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-jobs-tensorboard
+  labels:
+    run: my-jobs-tensorboard
+spec:
+  type: NodePort
+  ports:
+  - port: 9999
+    targetPort: 9999
+    nodePort: 31000
+    protocol: TCP
+    name: http
+  selector:
+    run: my-jobs-tensorboard
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-jobs-tensorboard
+spec:
+  selector:
+    matchLabels:
+      run: my-jobs-tensorboard
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: my-jobs-tensorboard
+    spec:
+      volumes:
+      - name: jobs-claim
+        persistentVolumeClaim:
+          claimName: gfs-jobs-claim
+      containers:
+      - name: jobs-tensorboard
+        image: tensorflow/tensorflow:1.6.0
+        command: ['tensorboard', '--logdir=/mnt/jobs', '--port', '9999']
+        ports:
+        - containerPort: 9999
+        volumeMounts:
+        - name: jobs-claim
+          mountPath: /mnt/jobs
+          readOnly: False

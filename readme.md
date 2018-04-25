@@ -217,12 +217,45 @@ Verify that the persistent volume was created:
 for more pod infos:
 `kubectl describe pod mxnet-cpu`
 
-### backup
+### trouble shoot
 
+
+```
+$ sudo gluster volume create jobs replica 2 node1:/mnt/gf_500G/jobs node2:/mnt/gf_500G/jobs
+volume create: jobs: failed: Staging failed on ubuntu. Error: /mnt/gf_500G/jobs is already part of a volume
+```
+
+solutions:
+
+1. This command removed the trusted.glusterfs.volume-id attribute.
+
+```
+setfattr -x trusted.glusterfs.volume-id [path to brick]
+```
+
+2. This command removes the trusted.gfid attribute.  Don’t worry if this attribute does not exist
+
+`setfattr -x trusted.gfid [path to brick]`
+
+3. This command removes the .glusterfs directory inside of the brick directory.  In my case it was not needed because the original directories were moved but if the directory is truly being re-used this will clean things up.
+
+`rm -rf [path to brick]/.glusterfs`
+
+https://www.spyderserve.com/kb/glusterfs-brick-already-part-volume/
+
+
+### cmd table
+
+```
 sudo gluster volume info
-sudo gluster volume state
+sudo gluster volume state <volume-name>
 sudo mount -t glusterfs 192.168.2.177:/gv-test /mnt/dfs
 
+sudo gluster volume start <volume-name>
+sudo gluster volume state <volume-name>
+sudo gluster volume stop <volume-name>
+sudo gluster volume delete <volume-name>
+```
 references
 ----------
 

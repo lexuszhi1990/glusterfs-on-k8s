@@ -4,7 +4,7 @@ metadata:
   name: gfs-dataset-claim
 spec:
   accessModes:
-  - ReadOnlyMany
+  - ReadWriteMany
   resources:
      requests:
        storage: 256Gi
